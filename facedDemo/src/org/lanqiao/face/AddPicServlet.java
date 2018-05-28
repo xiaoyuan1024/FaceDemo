@@ -17,7 +17,7 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 /*
- * ÉÏ´«ÕÕÆ¬¹ı³ÌµÄ¾ßÌå²Ù×÷
+ * ä¸Šä¼ ç…§ç‰‡è¿‡ç¨‹çš„å…·ä½“æ“ä½œ
  */
 public class AddPicServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -27,17 +27,17 @@ public class AddPicServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// ÉÏ´«ÕÕÆ¬¹ı³Ì
+		// ä¸Šä¼ ç…§ç‰‡è¿‡ç¨‹
 				try {
-					// Í³Ò»±àÂë
-					request.setCharacterEncoding("utf-8");// ÉèÖÃÇëÇóµÄ±àÂë·½Ê½
-					response.setContentType("text/html;charset=utf-8");// ÉèÖÃ out µÄ±àÂë·½Ê½
-					// ´´½¨PrintWriter¶ÔÏó£¬½«·ÖÎö½á¹û·µ»Ø¸øÇ°Ì¨µÄAJAX
+					// ç»Ÿä¸€ç¼–ç 
+					request.setCharacterEncoding("utf-8");// è®¾ç½®è¯·æ±‚çš„ç¼–ç æ–¹å¼
+					response.setContentType("text/html;charset=utf-8");// è®¾ç½® out çš„ç¼–ç æ–¹å¼
+					// åˆ›å»ºPrintWriterå¯¹è±¡ï¼Œå°†åˆ†æç»“æœè¿”å›ç»™å‰å°çš„AJAX
 					PrintWriter out = response.getWriter();
-					// ÉèÖÃ±íµ¥ÀàĞÍ£º°üº¬ÎÄ¼şÀàĞÍµÄ×Ö¶Î
+					// è®¾ç½®è¡¨å•ç±»å‹ï¼šåŒ…å«æ–‡ä»¶ç±»å‹çš„å­—æ®µ
 					boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-					// ÉèÖÃÉÏ´«Â·¾¶
-					String uploadFilePath = "e:\\imgs";
+					// è®¾ç½®ä¸Šä¼ è·¯å¾„
+					String uploadFilePath = "c:\\imgs";
 					if (isMultipart) {
 						FileItemFactory factory = new DiskFileItemFactory();
 						ServletFileUpload upload = new ServletFileUpload(factory);
@@ -46,18 +46,18 @@ public class AddPicServlet extends HttpServlet {
 						items = upload.parseRequest(request);
 						Iterator<FileItem> iter = items.iterator();
 						while (iter.hasNext()) {
-							// »ñÈ¡ÕÕÆ¬
+							// è·å–ç…§ç‰‡
 							FileItem item = iter.next();
 							if (!item.isFormField()) {
-								// »ñÈ¡ÎÄ¼şÃû
+								// è·å–æ–‡ä»¶å
 								String fileName = item.getName();
 								if (fileName != null && !fileName.equals("")) {
 									File saveFile = new File(uploadFilePath, fileName);
 									filePath = saveFile.getPath();
-									// ±£´æÕÕÆ¬
+									// ä¿å­˜ç…§ç‰‡
 									item.write(saveFile);
-									System.out.println("ÉÏ´«³É¹¦£¡");
-									// ½øĞĞÈËÁ³Ê¶±ğ
+									System.out.println("ä¸Šä¼ æˆåŠŸï¼");
+									// è¿›è¡Œäººè„¸è¯†åˆ«
 									Object result = FaceRecongize.faceRecognize(filePath);
 									out.print(result);
 									return;
