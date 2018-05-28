@@ -17,7 +17,7 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 /*
- * ÉÏ´«ÕÕÆ¬¹ı³ÌµÄ¾ßÌå²Ù×÷
+ * æ¶“å©ç´¶é“Ñ…å¢–æ©å›©â–¼é¨å‹«å¿æµ£æ’´æ·æµ£ï¿½
  */
 public class AddPicServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -27,17 +27,17 @@ public class AddPicServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// ÉÏ´«ÕÕÆ¬¹ı³Ì
+		// æ¶“å©ç´¶é“Ñ…å¢–æ©å›©â–¼
 				try {
-					// Í³Ò»±àÂë
-					request.setCharacterEncoding("utf-8");// ÉèÖÃÇëÇóµÄ±àÂë·½Ê½
-					response.setContentType("text/html;charset=utf-8");// ÉèÖÃ out µÄ±àÂë·½Ê½
-					// ´´½¨PrintWriter¶ÔÏó£¬½«·ÖÎö½á¹û·µ»Ø¸øÇ°Ì¨µÄAJAX
+					// ç¼ç†¶ç«´ç¼‚æ «çˆœ
+					request.setCharacterEncoding("utf-8");// ç’å‰§ç–†ç’‡é”‹çœ°é¨å‹­ç´ªé®ä½¹æŸŸå¯®ï¿½
+					response.setContentType("text/html;charset=utf-8");// ç’å‰§ç–† out é¨å‹­ç´ªé®ä½¹æŸŸå¯®ï¿½
+					// é’æ¶˜ç¼“PrintWriterç€µç¡…è–„é”›å±½çš¢é’å—˜ç€½ç¼æ’´ç‰æ©æ–¿æ´–ç¼æ¬å¢ é™æ‰®æ®‘AJAX
 					PrintWriter out = response.getWriter();
-					// ÉèÖÃ±íµ¥ÀàĞÍ£º°üº¬ÎÄ¼şÀàĞÍµÄ×Ö¶Î
+					// ç’å‰§ç–†ç›ã„¥å´Ÿç»«è¯²ç€·é”›æ°¬å¯˜éšî‚£æƒæµ å‰è¢«é¨å¬¬æ®‘ç€›æ¥î†Œ
 					boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-					// ÉèÖÃÉÏ´«Â·¾¶
-					String uploadFilePath = "d:\\imgs";
+					// è®¾ç½®ä¸Šä¼ è·¯å¾„
+					String uploadFilePath = "e:\\imgs";
 					if (isMultipart) {
 						FileItemFactory factory = new DiskFileItemFactory();
 						ServletFileUpload upload = new ServletFileUpload(factory);
@@ -46,18 +46,18 @@ public class AddPicServlet extends HttpServlet {
 						items = upload.parseRequest(request);
 						Iterator<FileItem> iter = items.iterator();
 						while (iter.hasNext()) {
-							// »ñÈ¡ÕÕÆ¬
+							// é‘¾å³°å½‡é“Ñ…å¢–
 							FileItem item = iter.next();
 							if (!item.isFormField()) {
-								// »ñÈ¡ÎÄ¼şÃû
+								// é‘¾å³°å½‡é‚å›¦æ¬¢éšï¿½
 								String fileName = item.getName();
 								if (fileName != null && !fileName.equals("")) {
 									File saveFile = new File(uploadFilePath, fileName);
 									filePath = saveFile.getPath();
-									// ±£´æÕÕÆ¬
+									// æ·‡æ¿†ç“¨é“Ñ…å¢–
 									item.write(saveFile);
-									System.out.println("ÉÏ´«³É¹¦£¡");
-									// ½øĞĞÈËÁ³Ê¶±ğ
+									System.out.println("æ¶“å©ç´¶é´æ„¬å§›é”›ï¿½");
+									// æ©æ¶œî”‘æµœé¸¿åŠ¯ç’‡å——åŸ†
 									Object result = FaceRecongize.faceRecognize(filePath);
 									out.print(result);
 									return;
