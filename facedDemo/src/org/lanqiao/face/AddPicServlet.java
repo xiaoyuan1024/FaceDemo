@@ -37,7 +37,7 @@ public class AddPicServlet extends HttpServlet {
 					// 设置表单类型：包含文件类型的字段
 					boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 					// 设置上传路径
-					String uploadFilePath = "e:\\imgs";
+					String uploadFilePath = "d:\\imgs";
 					if (isMultipart) {
 						FileItemFactory factory = new DiskFileItemFactory();
 						ServletFileUpload upload = new ServletFileUpload(factory);
