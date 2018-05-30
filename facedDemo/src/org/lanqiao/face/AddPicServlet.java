@@ -17,7 +17,7 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 /*
- * 涓婁紶鐓х墖杩囩▼鐨勫叿浣撴搷浣�
+ * 上传照片操作
  */
 public class AddPicServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -27,14 +27,14 @@ public class AddPicServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// 涓婁紶鐓х墖杩囩▼
+		// 上传照片过程
 				try {
-					// 缁熶竴缂栫爜
-					request.setCharacterEncoding("utf-8");// 璁剧疆璇锋眰鐨勭紪鐮佹柟寮�
-					response.setContentType("text/html;charset=utf-8");// 璁剧疆 out 鐨勭紪鐮佹柟寮�
-					// 鍒涘缓PrintWriter瀵硅薄锛屽皢鍒嗘瀽缁撴灉杩斿洖缁欏墠鍙扮殑AJAX
+					// 统一编码
+					request.setCharacterEncoding("utf-8");// 设置request请求的编码格式
+					response.setContentType("text/html;charset=utf-8");// 设置response响应的编码格式
+					// 通过PrintWriter对象，将分析的结果返回给前台Ajax
 					PrintWriter out = response.getWriter();
-					// 璁剧疆琛ㄥ崟绫诲瀷锛氬寘鍚枃浠剁被鍨嬬殑瀛楁
+					// 设置表单类型：包含文件类型字段
 					boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 					// 设置上传路径
 					String uploadFilePath = "e:\\imgs";
@@ -46,18 +46,18 @@ public class AddPicServlet extends HttpServlet {
 						items = upload.parseRequest(request);
 						Iterator<FileItem> iter = items.iterator();
 						while (iter.hasNext()) {
-							// 鑾峰彇鐓х墖
+							// 获取每一个照片
 							FileItem item = iter.next();
 							if (!item.isFormField()) {
-								// 鑾峰彇鏂囦欢鍚�
+								// 获取文件名
 								String fileName = item.getName();
 								if (fileName != null && !fileName.equals("")) {
 									File saveFile = new File(uploadFilePath, fileName);
 									filePath = saveFile.getPath();
-									// 淇濆瓨鐓х墖
+									// 保存图片
 									item.write(saveFile);
 									System.out.println("涓婁紶鎴愬姛锛�");
-									// 杩涜浜鸿劯璇嗗埆
+									// 进行人脸识别
 									Object result = FaceRecongize.faceRecognize(filePath);
 									out.print(result);
 									return;
