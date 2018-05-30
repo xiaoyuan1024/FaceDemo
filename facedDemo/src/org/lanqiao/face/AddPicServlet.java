@@ -24,6 +24,7 @@ public class AddPicServlet extends HttpServlet {
 		this.doPost(request, response);
 	}
 
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// 上传照片过程
