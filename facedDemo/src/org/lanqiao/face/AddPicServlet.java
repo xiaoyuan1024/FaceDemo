@@ -56,7 +56,7 @@ public class AddPicServlet extends HttpServlet {
 									filePath = saveFile.getPath();
 									// 保存图片
 									item.write(saveFile);
-									System.out.println("涓婁紶鎴愬姛锛�");
+									System.out.println("上传成功！！！");
 									// 进行人脸识别
 									Object result = FaceRecongize.faceRecognize(filePath);
 									out.print(result);
